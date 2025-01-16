@@ -3,128 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The RedFox Session GEN</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', 'Segoe UI', sans-serif;
+      background-color: #4c0070;
+      color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-      font-family: 'Roboto', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #4e9f3d, #34d7b7, #55c7f7);
-      background-size: 300% 300%;
-      animation: gradientAnimation 10s ease infinite;
-    }
-
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
     }
 
     h1 {
-      color: white;
-      font-size: 3.5rem;
-      margin-bottom: 40px;
-      text-align: center;
-      letter-spacing: 3px;
+      font-size: 3rem;
+      font-weight: bold;
       text-transform: uppercase;
-      font-weight: 700;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    h1 span {
+      color: #ff0000;
+      font-size: 1.2rem;
+      display: block;
+      font-weight: normal;
+      margin-top: 10px;
+    }
+
+    img {
+      width: 150px;
+      border-radius: 50%;
+      margin-bottom: 20px;
     }
 
     .btn {
       width: 250px;
-      padding: 15px 25px;
+      padding: 15px;
       margin: 10px;
-      background: transparent;
+      background: #6a0dad;
+      border: none;
       border-radius: 25px;
-      border: 2px solid #ffffff;
-      font-size: 18px;
+      color: white;
+      font-size: 1rem;
       font-weight: bold;
       text-transform: uppercase;
-      color: white;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
       cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Add shine effect on hover */
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      height: 200%;
-      width: 200%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: skewX(45deg);
-      transition: all 0.5s;
-    }
-
-    .btn:hover::before {
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, background 0.3s;
     }
 
     .btn:hover {
-      background-color: #ffffff;
-      color: #333;
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
-      transform: scale(1.05);
+      transform: translateY(-5px);
+      background: #ff4500;
     }
 
     .btn:active {
-      filter: brightness(0.9);
-      transform: scale(0.98);
+      transform: translateY(2px);
+      background: #d60000;
     }
 
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      .btn {
-        width: 80%;
-        padding: 12px 20px;
-        font-size: 16px;
-      }
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #bbbbbb;
     }
 
-    @media (min-width: 600px) and (max-width: 1024px) {
-      h1 {
-        font-size: 2.8rem;
-      }
-      .btn {
-        width: 220px;
-        padding: 14px 22px;
-      }
+    footer a {
+      color: #bbbbbb;
+      text-decoration: none;
     }
 
-    @media (min-width: 1024px) {
-      h1 {
-        font-size: 3.5rem;
-      }
-      .btn {
-        width: 250px;
-        padding: 15px 25px;
-      }
+    footer a:hover {
+      text-decoration: underline;
     }
-
   </style>
 </head>
 <body>
+  <img src="https://iili.io/24zBVF1.png" alt="pwd by ©RedFox-Coders™">
+  <h2>
+    RedFox-Session Maker
+    <span>Version 1.0.0</span>
+  </h2>
 
-  <button onclick="window.open(`/qr`)" class="btn">QR Code</button>
-  <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
-  <button onclick="window.open(`https://github.com/GlobalTechInfo`)" class="btn">GitHub</button>
-  <button onclick="window.open(`https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07`)" class="btn">WhatsApp</button>
+  <button class="btn" onclick="window.open('http://redfox-inc.22web.org/')">❄️RedFox Web❄️</button>
+  <button class="btn" onclick="window.open('/qr')">♻️QR 🛜</button>
+  <button class="btn" onclick="window.open('/pair')">♻️Pair 💕</button>
+  <button class="btn" onclick="window.open('https://wa.me/94763108069')">⚕️Whatsapp✅️</button>
 
+  <footer>
+    Powered by <a href="https://redfox-inc.22web.org/">©RedFox-Coders™</a>. 2025
+  </footer>
 </body>
 </html>

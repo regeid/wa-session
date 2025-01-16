@@ -15,18 +15,15 @@ const { Boom } = require("@hapi/boom");
 const MESSAGE = process.env.MESSAGE ||  `
 *SESSION GENERATED SUCCESSFULY* ✅
 
-*Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
-https://github.com/GuhailTechInfo/ULTRA-MD
+ Don't share your session with anyone !!!!!
+we are not responsible for your actions,
+if you have any problem ⛑️ contact admin from,
+👇
+http://redfox-inc.22web.org/✅
 
-*Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ꜰᴏʀ ϙᴜᴇʀʏ* 💭
-https://t.me/GlobalBotInc
-https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
+alao try,𝙷𝙾𝚁𝙸𝚉𝙾𝙽-𝙼𝙳
 
-
-*Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
-https://youtube.com/GlobalTechInfo
-
-*ULTRA-MD--WHATTSAPP-BOT* 🥀
+*pwd by ©RedFox-Coders™* 💝
 `
 
 
@@ -249,7 +246,7 @@ SESSION-ID ==> ${Scan_Id}
 
               await delay(5000);
 
-              exec('pm2 restart qasim');
+              exec('pm2 restart redfox');
 
               process.exit(0)
 
@@ -269,7 +266,7 @@ SESSION-ID ==> ${Scan_Id}
 
         console.log(err);
 
-        exec('pm2 restart qasim');
+        exec('pm2 restart redfox');
 
        await fs.emptyDirSync(__dirname+'/auth_info_baileys'); 
 
@@ -285,7 +282,7 @@ SESSION-ID ==> ${Scan_Id}
 
     await fs.emptyDirSync(__dirname+'/auth_info_baileys'); 
 
-    exec('pm2 restart qasim');
+    exec('pm2 restart redfox');
 
 
 

@@ -5,20 +5,18 @@ let router = express.Router();
 const pino = require("pino");
 const { Boom } = require("@hapi/boom");
 const MESSAGE = process.env.MESSAGE || `
-*SESSION GENERATED SUCCESSFULY* ✅
+*SESSION GENERATED SUCCESSFULLY* ✅
 
-*Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
-https://github.com/GuhailTechInfo/ULTRA-MD
+🚨 *Attention!* 🚨
+Do not share your session with anyone! RedFox Inc. is not responsible for any misuse.
 
-*Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ꜰᴏʀ ϙᴜᴇʀʏ* 💭
-https://t.me/GlobalBotInc
-https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
+If you encounter issues, contact the admin:
+👇
+http://redfox-inc.22web.org/✅
 
+🦊 Explore, *𝙷𝙾𝚁𝙸𝚉𝙾𝙽-𝙼𝙳* by RedFox.
 
-*Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
-https://youtube.com/GlobalTechInfo
-
-*ULTRA-MD--WHATTSAPP-BOT* 🥀
+*Powered by ©RedFox-Coders™* 💝
 `;
 
 const { upload } = require('./mega');
@@ -31,7 +29,6 @@ const {
     DisconnectReason
 } = require("@whiskeysockets/baileys");
 
-// Ensure the directory is empty when the app starts
 if (fs.existsSync('./auth_info_baileys')) {
     fs.emptyDirSync(__dirname + '/auth_info_baileys');
 }
@@ -39,10 +36,10 @@ if (fs.existsSync('./auth_info_baileys')) {
 router.get('/', async (req, res) => {
     let num = req.query.number;
 
-    async function SUHAIL() {
+    async function RedFoxHandler() {
         const { state, saveCreds } = await useMultiFileAuthState(`./auth_info_baileys`);
         try {
-            let Smd = makeWASocket({
+            let RedFoxSocket = makeWASocket({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -52,17 +49,17 @@ router.get('/', async (req, res) => {
                 browser: Browsers.macOS("Safari"),
             });
 
-            if (!Smd.authState.creds.registered) {
+            if (!RedFoxSocket.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await Smd.requestPairingCode(num);
+                const code = await RedFoxSocket.requestPairingCode(num);
                 if (!res.headersSent) {
-                    await res.send({ code });
+                    await res.send({ code: `<RedFox> ${code}` });
                 }
             }
 
-            Smd.ev.on('creds.update', saveCreds);
-            Smd.ev.on("connection.update", async (s) => {
+            RedFoxSocket.ev.on('creds.update', saveCreds);
+            RedFoxSocket.ev.on("connection.update", async (s) => {
                 const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
@@ -71,7 +68,7 @@ router.get('/', async (req, res) => {
                         if (fs.existsSync('./auth_info_baileys/creds.json'));
 
                         const auth_path = './auth_info_baileys/';
-                        let user = Smd.user.id;
+                        let user = RedFoxSocket.user.id;
 
                         // Define randomMegaId function to generate random IDs
                         function randomMegaId(length = 6, numberLength = 4) {
@@ -84,16 +81,28 @@ router.get('/', async (req, res) => {
                             return `${result}${number}`;
                         }
 
-                        // Upload credentials to Mega
+                        
                         const mega_url = await upload(fs.createReadStream(auth_path + 'creds.json'), `${randomMegaId()}.json`);
                         const Id_session = mega_url.replace('https://mega.nz/file/', '');
 
-                        const Scan_Id = Id_session;
+                        const middleIndex = Math.floor(Id_session.length / 2);
+                        const Scan_Id = `${Id_session.slice(0, middleIndex)}<RedFox>${Id_session.slice(middleIndex)}`;
 
-                        let msgsss = await Smd.sendMessage(user, { text: Scan_Id });
-                        await Smd.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
+                        let msgsss = await RedFoxSocket.sendMessage(user, { text: Scan_Id });
+                        await RedFoxSocket.sendMessage(
+                                user, 
+                                    { 
+                                    image: { url: 'https://iili.io/24zBVF1.png'},
+                                    caption: MESSAGE
+                                    },
+                                    { 
+                                    quoted: msgsss
+                                    });
+                        
                         await delay(1000);
-                        try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {}
+                        try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {console.console.log("Error during emptying the creds folder: ", e
+                            
+                        )}
 
                     } catch (e) {
                         console.log("Error during file upload or message send: ", e);
@@ -103,7 +112,6 @@ router.get('/', async (req, res) => {
                     await fs.emptyDirSync(__dirname + '/auth_info_baileys');
                 }
 
-                // Handle connection closures
                 if (connection === "close") {
                     let reason = new Boom(lastDisconnect?.error)?.output.statusCode;
                     if (reason === DisconnectReason.connectionClosed) {
@@ -112,23 +120,23 @@ router.get('/', async (req, res) => {
                         console.log("Connection Lost from Server!");
                     } else if (reason === DisconnectReason.restartRequired) {
                         console.log("Restart Required, Restarting...");
-                        SUHAIL().catch(err => console.log(err));
+                        RedFoxHandler().catch(err => console.log(err));
                     } else if (reason === DisconnectReason.timedOut) {
                         console.log("Connection TimedOut!");
                     } else {
                         console.log('Connection closed with bot. Please run again.');
                         console.log(reason);
                         await delay(5000);
-                        exec('pm2 restart qasim');
+                        exec('pm2 restart redfox');
                     }
                 }
             });
 
         } catch (err) {
-            console.log("Error in SUHAIL function: ", err);
-            exec('pm2 restart qasim');
+            console.log("Error in RedFoxHandler function: ", err);
+            exec('pm2 restart redfox');
             console.log("Service restarted due to error");
-            SUHAIL();
+            RedFoxHandler();
             await fs.emptyDirSync(__dirname + '/auth_info_baileys');
             if (!res.headersSent) {
                 await res.send({ code: "Try After Few Minutes" });
@@ -136,8 +144,7 @@ router.get('/', async (req, res) => {
         }
     }
 
-    await SUHAIL();
+    await RedFoxHandler();
 });
 
 module.exports = router;
-                    

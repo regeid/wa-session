@@ -1,6 +1,6 @@
 {
-  "name": "web-pair",
-  "version": "0.0.2",
+  "name": "Session-Genarator",
+  "version": "1.0.0",
   "type": "commonjs",
   "description": "A multi-functional WhatsApp bot Pairing Web and QR Scanner.",
   "main": "index.js",
@@ -8,17 +8,17 @@
         "node": ">=20.0.0"
   },
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name qasim",
-    "stop": "pm2 stop qasim",
-    "restart": "pm2 restart qasim",
+    "start": "pm2 start index.js --deep-monitoring --attach --name redfox",
+    "stop": "pm2 stop redfox",
+    "restart": "pm2 restart redfox",
     "dev": "nodemon index.js"
   },
   "keywords": [
-    "baileysQr", "MdLogin", "ULTRA-MD", "whatsapp-bot", "BotWhatsapp",
+    "baileysQr", "MdLogin", "𝙷𝙾𝚁𝙸𝚉𝙾𝙽-𝙼𝙳", "whatsapp-bot", "BotWhatsapp",
     "whatsappMdLogin", "adiwajshing/baileys", "baileys-md-qr", "multi-device-qr",
     "md-pair", "bot-pair", "baileysQrScanner", "botpairing", "WhatsAppPairing", "LinkDevice"
   ],
-  "author": "GlobalTechInfo",
+  "author": "The RedFox-Coders™",
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "^10.0.1",
