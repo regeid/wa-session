@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "qr.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/qr.js"
+    }
+  ],
+  "env": {
+    "MESSAGE": "Pesan yang ingin ditampilkan di bot",
+    "OTHER_ENV_VARIABLE": "value"
+  }
+}
