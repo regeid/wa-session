@@ -1,4 +1,5 @@
-const { upload } = require('./mega');
+const { initializeApp } = require("firebase/app");
+const { getStorage, ref, uploadBytes, getDownloadURL } = require("firebase/storage");
 const express = require('express');
 const pino = require("pino");
 const { toBuffer } = require("qrcode");
@@ -7,7 +8,17 @@ const fs = require("fs-extra");
 const os = require('os');  // Menggunakan direktori sementara yang disediakan oleh Vercel
 const { Boom } = require("@hapi/boom");
 
-const MESSAGE = process.env.MESSAGE ||  `
+// Konfigurasi Firebase
+const firebaseConfig = {
+  apiKey: "your_api_key",
+  authDomain: "your_auth_domain",
+  projectId: "your_project_id",
+  storageBucket: "your_storage_bucket",
+  messagingSenderId: "your_messaging_sender_id",
+  appId: "your_app_id"
+};
+
+const MESSAGE = process.env.MESSAGE || `
 *SESSION GENERATED SUCCESSFULY* ✅
 
 *Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
@@ -17,7 +28,6 @@ https://github.com/GuhailTechInfo/ULTRA-MD
 https://t.me/GlobalBotInc
 https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
 
-
 *Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
 https://youtube.com/GlobalTechInfo
 
@@ -25,6 +35,8 @@ https://youtube.com/GlobalTechInfo
 `;
 
 const router = express.Router();
+initializeApp(firebaseConfig);
+const storage = getStorage();
 
 router.get('/', async (req, res) => {
   const { default: SuhailWASocket, useMultiFileAuthState, Browsers, delay, DisconnectReason, makeInMemoryStore } = require("@whiskeysockets/baileys");
@@ -64,31 +76,22 @@ router.get('/', async (req, res) => {
           await delay(3000);
           let user = Smd.user.id;
 
-          // Generate random Mega ID and upload to Mega
-          function randomMegaId(length = 6, numberLength = 4) {
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-              result += characters.charAt(Math.floor(Math.random() * characters.length));
-            }
-            const number = Math.floor(Math.random() * Math.pow(10, numberLength));
-            return `${result}${number}`;
-          }
+          const authPath = path.join(os.tmpdir(), 'auth_info_baileys', 'creds.json');
+          
+          // Upload ke Firebase Storage
+          const fileBuffer = fs.readFileSync(authPath);
+          const storageRef = ref(storage, `auth/${Date.now()}-creds.json`);
+          await uploadBytes(storageRef, fileBuffer);
+          const firebaseUrl = await getDownloadURL(storageRef);
 
-          const auth_path = path.join(os.tmpdir(), 'auth_info_baileys');  // Ganti ke direktori sementara
-          const mega_url = await upload(fs.createReadStream(path.join(auth_path, 'creds.json')), `${randomMegaId()}.json`);
+          console.log(`SESSION ID ==> ${firebaseUrl}`);
 
-          const string_session = mega_url.replace('https://mega.nz/file/', '');
-          const Scan_Id = string_session;
-
-          console.log(`SESSION ID ==> ${Scan_Id}`);
-
-          let msgsss = await Smd.sendMessage(user, { text: Scan_Id });
+          let msgsss = await Smd.sendMessage(user, { text: firebaseUrl });
           await Smd.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
 
           await delay(1000);
           try {
-            await fs.emptyDirSync(auth_path);  // Clear temporary directory
+            await fs.emptyDirSync(path.join(os.tmpdir(), 'auth_info_baileys'));  // Clear temporary directory
           } catch (e) {
             console.error('Error clearing directory:', e);
           }
